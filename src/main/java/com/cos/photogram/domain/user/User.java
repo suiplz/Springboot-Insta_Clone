@@ -30,14 +30,13 @@ public class User {
 
     private String website;
     private String bio;
-
     @Column(nullable = false)
     private String email;
-
     private String gender;
-
     private String profileImageUrl;
     private String role;
+
+    private String phone;
 
     private LocalDateTime createDate;
 
