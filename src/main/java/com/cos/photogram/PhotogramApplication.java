@@ -1,13 +1,13 @@
-package com.cos.photogramstart;
+package com.cos.photogram;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PhotogramStartApplication {
+public class PhotogramApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PhotogramStartApplication.class, args);
+		SpringApplication.run(PhotogramApplication.class, args);
 	}
 
 }
