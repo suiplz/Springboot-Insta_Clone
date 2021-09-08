@@ -3,13 +3,10 @@ package com.cos.photogram.service;
 import com.cos.photogram.domain.user.User;
 import com.cos.photogram.domain.user.UserRepository;
 import com.cos.photogram.handler.ex.CustomValidationApiException;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.function.Supplier;
 
 @RequiredArgsConstructor
 @Service

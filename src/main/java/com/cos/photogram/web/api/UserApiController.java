@@ -3,7 +3,6 @@ package com.cos.photogram.web.api;
 import com.cos.photogram.config.auth.PrincipalDetails;
 import com.cos.photogram.domain.user.User;
 import com.cos.photogram.handler.ex.CustomValidationApiException;
-import com.cos.photogram.handler.ex.CustomValidationException;
 import com.cos.photogram.service.UserService;
 import com.cos.photogram.web.dto.CMRespDto;
 import com.cos.photogram.web.dto.user.UserUpdateDto;
