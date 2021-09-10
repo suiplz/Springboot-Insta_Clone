@@ -23,7 +23,12 @@ public class ControllerExceptionHandler {
         //1. 클라이언트에게 응답할 때는 Script
         //2. Ajax통신 - CMPRespDto
         //3. Android통신 - CMRespDto
-        return Script.back(e.getErrorMap().toString());
+
+        if(e.getErrorMap() == null) {
+            return Script.back(e.getMessage());
+        } else {
+            return Script.back(e.getErrorMap().toString());
+        }
     }
 
     @ExceptionHandler(CustomValidationApiException.class)
