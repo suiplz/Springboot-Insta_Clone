@@ -3,13 +3,21 @@ package com.cos.photogram.service;
 import com.cos.photogram.domain.subscribe.SubScribeRepository;
 import com.cos.photogram.domain.user.User;
 import com.cos.photogram.domain.user.UserRepository;
+import com.cos.photogram.handler.ex.CustomApiException;
 import com.cos.photogram.handler.ex.CustomException;
 import com.cos.photogram.handler.ex.CustomValidationApiException;
 import com.cos.photogram.web.dto.user.UserProfileDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -18,6 +26,33 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
     private final SubScribeRepository subScribeRepository;
+
+    @Value("${file.path}")
+    private String uploadFolder;
+
+    @Transactional
+    public User 회원프로필사진변경(int principalId, MultipartFile profileImageFile){
+        UUID uuid = UUID.randomUUID();
+        String imageFileName = uuid + "_" +profileImageFile.getOriginalFilename(); // 1.jpg
+        System.out.println("이미지 파일이름 : "+ imageFileName);
+
+        Path imageFilePath = Paths.get(uploadFolder + imageFileName);
+
+
+        // 통신, I/O -> 예외 발생 가능
+        try {
+            Files.write(imageFilePath, profileImageFile.getBytes());
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        User userEntity = userRepository.findById(principalId).orElseThrow(() ->{
+            throw new CustomApiException("유저를 찾을 수 없습니다.");
+        });
+        userEntity.setProfileImageUrl(imageFileName);
+
+        return userEntity;
+    }
 
     @Transactional(readOnly = true)
     public UserProfileDto 회원프로필(int pageUserId, int principalId) { //userId를 받아서 UserController mapping에 넘김
@@ -37,6 +72,11 @@ public class UserService {
 
         dto.setSubscribeCount(subscribeCount);
         dto.setSubscribeState(subscribeState == 1);
+
+        //likeCount 추가
+        userEntity.getImages().forEach((image) -> {
+            image.setLikeCount(image.getLikes().size());
+        });
 
         return dto;
     }

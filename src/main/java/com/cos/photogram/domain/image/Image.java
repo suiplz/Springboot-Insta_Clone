@@ -13,19 +13,21 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString(exclude = {"user"})
+@ToString(exclude = {"user", "likes"})
 @Entity
 public class Image {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String caption;
     private String postImageUrl; // 사진을 전송받아서 그 사진을 서버에 특적 폴더에 저장 - DB에 저장된 경로를 insert
 
 
     @JsonIgnoreProperties({"images"})
     @JoinColumn(name = "userId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private User user;
 
     @JsonIgnoreProperties({"image"})
