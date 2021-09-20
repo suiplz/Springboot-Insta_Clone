@@ -3,10 +3,7 @@ package com.cos.photogram.domain.likes;
 import com.cos.photogram.domain.image.Image;
 import com.cos.photogram.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,12 +11,13 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"user"})
 @Data
 @Entity
 @Table(
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name = "subscribe_uk",
+                        name = "likes_uk",
                         columnNames = {"imageId", "UserId"}
                 )
         }

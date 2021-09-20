@@ -2,16 +2,14 @@ package com.cos.photogram.domain.user;
 
 import com.cos.photogram.domain.image.Image;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
+@ToString(exclude = {"images"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
