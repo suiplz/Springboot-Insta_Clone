@@ -2,10 +2,18 @@ package com.cos.photogram.domain.comment;
 
 import com.cos.photogram.domain.image.Image;
 import com.cos.photogram.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString(exclude = "image")
+@Data
+@Entity
 public class Comment {
 
     @Id
@@ -15,6 +23,7 @@ public class Comment {
     @Column(length = 100,nullable = false)
     private String content;
 
+    @JsonIgnoreProperties({"images"})
     @JoinColumn(name = "userId")
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;

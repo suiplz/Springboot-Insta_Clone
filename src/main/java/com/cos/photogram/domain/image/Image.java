@@ -1,5 +1,6 @@
 package com.cos.photogram.domain.image;
 
+import com.cos.photogram.domain.comment.Comment;
 import com.cos.photogram.domain.likes.Likes;
 import com.cos.photogram.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString(exclude = {"user", "likes"})
+@ToString(exclude = {"user", "likes", "comment"})
 @Entity
 public class Image {
 
@@ -35,6 +36,11 @@ public class Image {
     private List<Likes> likes;
 
     private LocalDateTime createDate;
+
+    @OrderBy("id DESC")
+    @JsonIgnoreProperties({"image"})
+    @OneToMany(mappedBy = "image")
+    private List<Comment> comments;
 
     @Transient // DB에 컬럼이 만들어지지 않는다.
     private boolean likeState;
