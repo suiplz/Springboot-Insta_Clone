@@ -19,11 +19,9 @@ public class ValidationAdvice {
     @Around("execution(* com.cos.photogram.web.api.*Controller.*(..))")
     public Object apiAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
 
-        System.out.println("web api 컨트롤러 ==========");
         Object[] args = proceedingJoinPoint.getArgs();
         for (Object arg: args){
             if(arg instanceof BindingResult){
-                System.out.println("유효성 검사를 하는 함수입니다.");
                 BindingResult bindingResult = (BindingResult) arg;
 
                 if(bindingResult.hasErrors()){
